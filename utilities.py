@@ -77,10 +77,10 @@ class TextDataset(object):
                     # ls = line.split(' ')
                     ls = split_pattern.split(line)
                     if ls[0].find('.') != -1:
-                        print(line)
+                        # print(line)
                         continue
-                    if ls[6].find('_') != -1:
-                        print(line)
+                    # if ls[6].find('_') != -1:
+                        # print(line)
                     word, head = ls[1], int(ls[6])
                     pos, rel = ls[4], ls[7]
                     word = word.lower()

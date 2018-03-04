@@ -240,7 +240,7 @@ def compute_counts(data_dir, training_filename, tag_types, counts=None, last_dat
                 if not token:
                     continue
                 # if use_all_chars:
-                max_word_length = max(max_word_length, len(token))
+                # max_word_length = max(max_word_length, len(token))
                 if token in counts:
                     counts[token] += 1
                 else:
@@ -665,8 +665,8 @@ def train_memory_efficient():
             rel_dict = {'null': 0}
             # TODO
             # If tag_dict is empty, both B and I would be empty, then parsing training data will be problematic.
-        print('max_word_length:', max_word_length)
-        save_max_word_length(max_word_length)
+        # print('max_word_length:', max_word_length)
+        # save_max_word_length(max_word_length)
         print('Vocabulary size: %s' % len(vocab))
         pos_dict = build_pos_dictionary()
         save_dictionary(model_dir, vocab)
