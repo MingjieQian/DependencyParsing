@@ -559,52 +559,21 @@ def create_model(model_dir,
 
     # activation_hidden = tf.matmul(embedded_reshape, weights_hidden) + biases_hidden
     activation_hidden = nn_ops.xw_plus_b(embedded_dropout, weights_hidden, biases_hidden, name='activation_hidden')
-    # Polynomial kernel (cubic)
-    # r0.7085-p0.8370-f0.7658-t110.0702s
-    # Polynomial kernel (cubic) + ReLU
-    # r0.7216-p0.8415-f0.7749-t99.5459s
-    # Polynomial kernel (quadratic)
-    # r0.7582-p0.8446-f0.7988-t97.6890s
-    # outputs_hidden = activation_hidden * activation_hidden
-    # tanh kernel
-    # r0.7700-p0.8408-f0.8036-t71.4103s
     outputs_hidden = tf.nn.tanh(activation_hidden)
     outputs_hidden_dropout = tf.nn.dropout(outputs_hidden, keep_prob)
 
     w_fc = tf.Variable(tf.truncated_normal([hidden_size, len(tag_dict)], seed=1), name='w_fc')
     b_fc = tf.Variable(tf.truncated_normal([len(tag_dict)], seed=1), name='b_fc')
-
     logits = nn_ops.xw_plus_b(outputs_hidden_dropout, w_fc, b_fc, name='logits')
-    # tf.argmax output is int64 which will generate a TypeError:
-    # Input 'y' of 'Equal' Op has type int32 that does not match type int64 of argument 'x'
-    # for tf.equal()
-
-    # outputs_int64: Tensor("outputs:0", shape=(?,), dtype=int64)
     outputs_int64 = tf.argmax(logits, 1)
-    # outputs: Tensor("Cast:0", shape=(?,), dtype=int32)
     outputs = math_ops.cast(outputs_int64, tf.int32, name='outputs')
     label_id_arr = tf.placeholder(tf.int32, shape=[None], name="label_id_arr")
-    if debug:
-        print(outputs)
-        print(label_id_arr)
-        print(tf.equal(outputs, label_id_arr))
 
     correct_prediction = tf.reduce_sum(tf.cast(tf.equal(outputs, label_id_arr), tf.int32), name='correct_prediction')
     cross_entropy = nn_ops.sparse_softmax_cross_entropy_with_logits(logits, label_id_arr)
     weights = tf.placeholder(tf.float32, [None], 'weights')
     batch_loss = cross_entropy * weights
-    # batch_loss /= tf.reduce_sum(weights)
-    # To do. weights.shape()[0] will return a tensor.
-    # cost = batch_loss / math_ops.cast(array_ops.shape(weights)[0], tf.float32)
-    # Using cost tensor of shape [None] gives r0.9322-p0.9388-f0.9355 for answer concept recognition.
-    # Using cost scalar tensor gives r0.9307-p0.9392-f0.9349
-    # It's a mystery that a cost tensor of shape [None] can still be applicable.
-    # It seems that if the input tensor is not a scalar tensor, TF will sum up all entries first.
-    # cost = batch_loss
     loss = tf.reduce_mean(batch_loss, name='loss')
-    # weights.get_shape()[0].value would be None and
-    # math_ops.cast(weights.get_shape()[0].value, tf.float32) will get an error.
-    # cost = batch_loss / math_ops.cast(weights.get_shape()[0].value, tf.float32)
 
     # Gradients and SGD update operation for training the model.
     lr = tf.placeholder(dtype=tf.float32, shape=[], name="lr")
