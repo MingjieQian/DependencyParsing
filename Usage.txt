@@ -1,0 +1,22 @@
+# Training
+
+python "C:\Users\miqian\Documents\Code\Python\DependencyParsing\DependencyParsing.py" -T train -d "C:\Users\miqian\Data\Dependency Parsing\UD_English-EWT" -t en-ud-train0.conllu -p "C:\Users\miqian\Documents\Visual Studio 2015\Projects\PythonExamples\GENSIMExamples\Model\text8-128.bin" -C LSTM -e 128 -H 100 -k 0.5 -l 0.01 -b 20 -i 2000 -c 1 --use_chars -E 50 --hidden_size_char 50 --decay 0.98
+
+python "C:\Users\miqian\Documents\Code\Python\DependencyParsing\DependencyParsing.py" -T train -d "C:\Users\miqian\Data\Dependency Parsing\UD_English-EWT" -t en-ud-train0.conllu -v en-ud-dev0.conllu -p "C:\Users\miqian\Documents\Visual Studio 2015\Projects\PythonExamples\GENSIMExamples\Model\text8-128.bin" -C LSTM -e 128 -H 100 -k 0.5 -l 0.01 -b 20 -i 3000 -c 1 --decay 1.0
+
+python "C:\Users\miqian\Documents\Code\Python\DependencyParsing\DependencyParsing.py" -T train -d "C:\Users\miqian\Data\Dependency Parsing\UD_English-EWT" -t en-ud-train0.conllu -v en-ud-dev0.conllu -p "C:\Users\miqian\Documents\Visual Studio 2015\Projects\PythonExamples\GENSIMExamples\Model\text8-128.bin" -C LSTM -e 128 -H 100 --use_chars -E 50 --hidden_size_char 50 -k 0.5 -l 0.01 -b 20 -i 3000 -c 1 --decay 1.0
+
+python "C:\Users\miqian\Documents\Code\Python\DependencyParsing\DependencyParsing.py" -T train -d "C:\Users\miqian\Data\Dependency Parsing\UD_English-EWT" -t en-ud-train0.conllu -v en-ud-train0.conllu -p "C:\Users\miqian\Documents\Visual Studio 2015\Projects\PythonExamples\GENSIMExamples\Model\text8-128.bin" -C LSTM -e 128 -H 100 -k 0.5 -l 0.01 -b 20 -i 3000 -c 1 --decay 1.0
+
+
+# Evaluation
+
+python "C:\Users\miqian\Documents\Code\Python\DependencyParsing\DependencyParsing.py" -T eval --model_dir "C:\Users\miqian\Data\Dependency Parsing\UD_English-EWT\model-NN-E50-h50-e128-H100-k0.5-l0.01-b20-i3000-text8-128.bin-en-ud-train0-en-ud-dev0" --eval_filepath "C:\Users\miqian\Data\Dependency Parsing\UD_English-EWT\en-ud-test0.conllu" --annotation_scheme CoNLL
+
+python "C:\Users\miqian\Documents\Code\Python\DependencyParsing\DependencyParsing.py" -T eval --model_dir "C:\Users\miqian\Data\Dependency Parsing\UD_English-EWT\model-NN-e128-H100-k0.5-l0.01-b20-i3000-text8-128.bin-en-ud-train0-en-ud-dev0" --eval_filepath "C:\Users\miqian\Data\Dependency Parsing\UD_English-EWT\en-ud-test0.conllu" --annotation_scheme CoNLL
+
+
+# Interactive prediction
+
+python "C:\Users\miqian\Documents\Code\Python\DependencyParsing\DependencyParsing.py" -T online --model_dir "C:\Users\miqian\Data\Dependency Parsing\UD_English-EWT\model-NN-E50-h50-e128-H100-k0.5-l0.01-b20-i3000-text8-128.bin-en-ud-train0-en-ud-dev0"
+> At eight o'clock on Thursday morning Arthur Zhang didn't feel very good at Microsoft Inc. in Mountain View.
