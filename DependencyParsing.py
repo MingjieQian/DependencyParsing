@@ -52,12 +52,7 @@ UNK = "UNK"
 STT = "^start"
 END = "end$"
 
-B = {}
-I = {}
-
 tag_open_pattern = re.compile(r'<([A-Z0-9]+)\b[^>]*>(.+)')
-O = "O"
-N = "N"
 
 # encoding = "latin-1"
 encoding = "utf-8"
