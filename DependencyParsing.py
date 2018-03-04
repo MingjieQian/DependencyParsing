@@ -775,6 +775,7 @@ def train_memory_efficient():
         accuracy = 0.0
         total_loss = 0.0
         num_token = 0
+        num_example = 0
 
         # One epoch
         nbatches = (len(data_train) + batch_size - 1) // batch_size
@@ -809,14 +810,15 @@ def train_memory_efficient():
                                                                   processed + len(words_batch),
                                                                   data_size, loss), end="\r")
             accuracy += correct_hits
+            num_example += len(wrd_id_arrs)
             loss *= len(label_id_arr)
             total_loss += loss
             counter += 1
             processed += len(words_batch)
         epoch += 1
         # print("Total training loss: %f, epoch: %d" % (total_loss, epoch))
-        accuracy /= len(wrd_id_arrs)
-        if epoch % 200 == 0:
+        accuracy /= num_example
+        if epoch % 100 == 0:
             lr *= decay
         # print("Training accuracy: %f, epoch: %d" % (accuracy, epoch))
         if validation_filename and epoch % 10 == 0:
