@@ -818,10 +818,10 @@ def train_memory_efficient():
         epoch += 1
         # print("Total training loss: %f, epoch: %d" % (total_loss, epoch))
         accuracy /= num_example
-        if epoch % 100 == 0:
+        if epoch % num_epoch_decay == 0:
             lr *= decay
         # print("Training accuracy: %f, epoch: %d" % (accuracy, epoch))
-        if validation_filename and epoch % 10 == 0:
+        if validation_filename and epoch % num_epoch_validation == 0:
             metrics = evaluate_memory_efficient(sess, data_dev, vocab, pos_dict, tag_dict, tags_map, rel_dict, batch_size, use_chars, char_dict)
             msg = "Epoch %d - training loss: %.4f acc: %.4f - val" % (epoch, total_loss, accuracy)
             print(msg, end='')
@@ -1387,6 +1387,16 @@ if __name__ == '__main__':
                         help='if in debug mode',
                         default=False
                         )
+    parser.add_argument('--num_epoch_decay',
+                        type=int,
+                        help='number of epochs for learning rate decay',
+                        default=10
+                        )
+    parser.add_argument('--num_epoch_validation',
+                        type=int,
+                        help='number of epochs for validation',
+                        default=2
+                        )
     args = parser.parse_args()
 
     data_dir = args.data_dir
@@ -1426,6 +1436,8 @@ if __name__ == '__main__':
     # yield_data = args.yield_data
     yield_data = True
     brnn_type = args.brnn_type
+    num_epoch_decay = args.num_epoch_decay
+    num_epoch_validation = args.num_epoch_validation
 
     debug = args.debug
     if debug:
