@@ -856,8 +856,9 @@ def train_memory_efficient():
                 checkpoint_path = os.path.join(model_dir, checkpoint_name)
                 saver.save(sess, checkpoint_path, global_step=epoch)
         else:
-            print("Epoch %d\t- training loss: %.4f\taccuracy: %.4f" % (epoch, total_loss, accuracy))
-            if epoch % 1000 == 0:
+            print("Epoch %d - training loss: %.4f acc: %.4f" % (epoch, total_loss, accuracy))
+            logger.info("Epoch %d - training loss: %.4f acc: %.4f" % (epoch, total_loss, accuracy))
+            if epoch % num_epoch_validation == 0:
                 now = time.time()
                 delta = now - start
                 print("Counter: %d, delta time = %f" % (counter, delta))
