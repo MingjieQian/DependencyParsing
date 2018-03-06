@@ -1,11 +1,11 @@
 # DependencyParsing
 A transition based dependency parser.
 
-A TensorFlow (>= 0.12.1) implementation of a transition-based dependency parser with a similar architecture in the paper "A Fast and Accurate Dependency Parser using Neural Networks" in EMNLP 2014. Bidirectional LSTM based character-level embedding is concatenated with word embedding.
+A TensorFlow (>= 0.12.1) implementation of a transition-based dependency parser with a similar architecture in the paper "A Fast and Accurate Dependency Parser using Neural Networks" in EMNLP 2014. Bidirectional LSTM based character-level embedding is also supported and the character-level embedding would be concatenated with word embedding to compose the final embedding vector for each word.
 
 Training and evaluation file should be in CoNLL format. 
 
-# Help:
+# Help
 python DependencyParsing.py -h
 
 # Training

@@ -2,6 +2,8 @@
 
 python "C:\Users\miqian\Documents\Code\Python\DependencyParsing\DependencyParsing.py" -T train -d "C:\Users\miqian\Data\Dependency Parsing\UD_English-EWT" -t en-ud-train.conllu -v en-ud-dev.conllu -p "C:\Users\miqian\Software\sequence_tagging\data\glove.6B\glove.6B.300d.txt" -e 300 -H 200 -k 0.5 -l 0.01 -b 20 -i 500 --decay 0.98
 
+python "C:\Users\miqian\Documents\Code\Python\DependencyParsing\DependencyParsing.py" -T train -d "C:\Users\miqian\Data\Dependency Parsing\UD_English-EWT" -t en-ud-train.conllu -v en-ud-dev.conllu -p "C:\Users\miqian\Software\sequence_tagging\data\glove.6B\glove.6B.300d.txt" -e 300 -H 200 --use_chars -E 50 --hidden_size_char 50 -k 0.5 -l 0.01 -b 20 -i 500 --decay 0.98
+
 python "C:\Users\miqian\Documents\Code\Python\DependencyParsing\DependencyParsing.py" -T train -d "C:\Users\miqian\Data\Dependency Parsing\UD_English-EWT" -t en-ud-train0.conllu -p "C:\Users\miqian\Documents\Visual Studio 2015\Projects\PythonExamples\GENSIMExamples\Model\text8-128.bin" -C LSTM -e 128 -H 100 -k 0.5 -l 0.01 -b 20 -i 2000 -c 1 --use_chars -E 50 --hidden_size_char 50 --decay 0.98
 
 python "C:\Users\miqian\Documents\Code\Python\DependencyParsing\DependencyParsing.py" -T train -d "C:\Users\miqian\Data\Dependency Parsing\UD_English-EWT" -t en-ud-train0.conllu -v en-ud-dev0.conllu -p "C:\Users\miqian\Documents\Visual Studio 2015\Projects\PythonExamples\GENSIMExamples\Model\text8-128.bin" -C LSTM -e 128 -H 100 -k 0.5 -l 0.01 -b 20 -i 3000 -c 1 --decay 1.0

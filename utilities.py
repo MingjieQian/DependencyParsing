@@ -505,7 +505,7 @@ def get_data_input(words_batch, pos_seq_batch, heads_batch, rel_seq_batch, vocab
             if use_chars:
                 chr_id_mat = []
                 for word in word_arr:
-                    chr_id_seq = [char_dict[ch] for ch in word]
+                    chr_id_seq = [char_dict[ch if ch in char_dict else UNK] for ch in word]
                     chr_id_mat.append(chr_id_seq)
                 chr_id_mats_.append(chr_id_mat)
         if projective:
