@@ -118,8 +118,6 @@ def fetch_minibatches(data, minibatch_size):
             yield words_batch, pos_seq_batch, heads_batch, rel_seq_batch
             words_batch, pos_seq_batch, heads_batch, rel_seq_batch = [], [], [], []
 
-        # if type(x[0]) == tuple:
-        #     x = zip(*x)
         words_batch += [words]
         pos_seq_batch += [pos_seq]
         heads_batch += [heads]
@@ -131,6 +129,8 @@ def fetch_minibatches(data, minibatch_size):
 
 def _pad_sequences(sequences, pad_tok, max_length):
     """
+    Copied from https://github.com/guillaumegenthial/sequence_tagging
+
     Args:
         sequences: a generator of list or tuple
         pad_tok: the char to pad with
@@ -151,6 +151,8 @@ def _pad_sequences(sequences, pad_tok, max_length):
 
 def pad_sequences(sequences, pad_tok, nlevels=1):
     """
+    Copied from https://github.com/guillaumegenthial/sequence_tagging
+
     Args:
         sequences: a generator of list or tuple
         pad_tok: the char to pad with
@@ -368,7 +370,7 @@ def evaluate_memory_efficient(sess, data_dev, vocab, pos_dict, tag_dict, tags_ma
                 if use_chars:
                     chr_id_mat = []
                     for word in word_arr:
-                        chr_id_seq = [char_dict[ch] for ch in word]
+                        chr_id_seq = [char_dict[ch if ch in char_dict else UNK] for ch in word]
                         chr_id_mat.append(chr_id_seq)
                     chr_id_mats_.append(chr_id_mat)
                     # Padding
